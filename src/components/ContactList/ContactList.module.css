@@ -1,0 +1,29 @@
+/* ContactList.module.css */
+.list {
+  padding: 0px;
+}
+
+.item {
+  display: flex;
+  gap: 20px;
+  width: 350px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.number {
+  font-weight: 700;
+}
+
+.button {
+  justify-content: flex-end;
+  background-color: #dc143c40;
+  border: 3px solid #2f4f4f;
+  border-radius: 10px;
+  padding: 1px 10px;
+}
+
+.button:hover {
+  background-color: #dc143c8c;
+  box-shadow: 0 5px 10px -1px #33333340;
+}
