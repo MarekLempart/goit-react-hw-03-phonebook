@@ -44,7 +44,6 @@ export class App extends Component {
   onChangeInput = evt => {
     // gdy zmienia się zawartość pola wejściowego, metoda otrzymuje nazwę i wartość
     const { name, value } = evt.currentTarget;
-
     // ustawia nowy stan komponentu
     this.setState({ [name]: value });
   };
@@ -79,12 +78,10 @@ export class App extends Component {
   // filtrowanie listy kontaktów według ciągu wyszukiwania wprowadzonego przez użytkownika
   filter = () => {
     const { contacts, filter } = this.state;
-
     // nowa tablica zawierająca wszystkie kontakty zawierające wyszukiwany ciąg znaków
     const filteredContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-
     // zwrócenie nowej tablicy zawierającej tylko te kontakty, które pasują do ciągu wyszukiwania
     return filteredContacts;
   };
@@ -93,10 +90,8 @@ export class App extends Component {
   delContact = id => {
     // pobranie aktualnej listy kontaktów ze stanu komponentu
     const { contacts } = this.state;
-
     // nowa tablica zawierająca wszystkie kontakty z wyjątkiem tego z id
     const filtred = contacts.filter(item => item.id !== id);
-
     // aktualizacja właściwości contacts
     this.setState({ contacts: filtred });
   };
@@ -105,14 +100,11 @@ export class App extends Component {
     return (
       <div className={css.conteiner}>
         <h1>Phonebook</h1>
-
         {/* formularz dodawania nowego kontaktu */}
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
-
         {/* filtr przechowywany w stanie + funkcja aktualizująca wartość filtra */}
         <Filter filter={this.state.filter} onChangeInput={this.onChangeInput} />
-
         {/* funkcja do usunięcia kontaktu + tablica kontaktów, która jest filtrowana w zależności od wartości filtra */}
         <ContactList delContact={this.delContact} contacts={this.filter()} />
       </div>
