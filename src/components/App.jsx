@@ -1,6 +1,5 @@
 // App.jsx
 
-// import { Component } from 'react';
 import { nanoid } from 'nanoid'; // pakiet do generowania identyfikatorów
 import { Component } from 'react';
 import css from './App.module.css';
@@ -8,16 +7,38 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
+const CONTACTS = 'contacts';
+const initialContacts = [
+  { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
+  { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
+  { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
+  { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
+];
+
 export class App extends Component {
   state = {
-    contacts: [
-      { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
-      { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
-      { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
-      { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  // metoda cyklu życia, która jest wywoływana raz po zamontowaniu komponentu
+  componentDidMount() {
+    const savedContacts = localStorage.getItem(CONTACTS);
+    if (savedContacts !== null) {
+      const parsedContacts = JSON.parse(savedContacts);
+      this.setState({ contacts: parsedContacts });
+    } else {
+      this.setState({ contacts: initialContacts });
+    }
+  }
+
+  // Metoda cyklu życia, która jest wywoływana po aktualizacji stanu.
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(CONTACTS, JSON.stringify(this.state.contacts));
+    }
+  }
 
   // obsługa zdarzenia zmiany danych wejściowych w polu wejściowym (input)
   onChangeInput = evt => {
@@ -46,8 +67,8 @@ export class App extends Component {
         // dodanie nowego obiektu kontaktu do tablicy listy
         list.push({
           id: nanoid(), // generowanie id
-          name: name,
-          number: number,
+          name,
+          number,
         });
 
         return { contacts: list };
