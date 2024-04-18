@@ -99,7 +99,7 @@ export class App extends Component {
   // Metoda obsługująca kliknięcie przycisku czyszczenia localStorage i przywracania podstawowego stanu
   handleResetLocalStorage = () => {
     localStorage.removeItem(CONTACTS);
-    this.setState({ constacts: [], isLocalStorageCleared: true });
+    this.setState({ contacts: initialContacts, isLocalStorageCleared: true });
     // this.loadContactsFromLocalStorage();
   };
 
@@ -107,7 +107,7 @@ export class App extends Component {
     const { isLocalStorageCleared } = this.state;
 
     return (
-      <div className={css.conteiner}>
+      <div className={css.container}>
         <h1>Phonebook</h1>
         {/* formularz dodawania nowego kontaktu */}
         <ContactForm addContact={this.addContact} />
