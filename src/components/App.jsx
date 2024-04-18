@@ -55,7 +55,7 @@ export class App extends Component {
     // sprawdzenie, czy kontakt o tej samej nazwie już istnieje
     if (
       this.state.contacts.some(
-        value => value.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+        value => value.name.toLowerCase() === name.toLowerCase()
       )
     ) {
       // jeśli kontakt istnieje, wyświetl powiadomienie
@@ -72,7 +72,7 @@ export class App extends Component {
           number,
         });
 
-        return { contacts: list };
+        return { contacts: list, isLocalStorageCleared: true };
       });
     }
   };
@@ -93,13 +93,13 @@ export class App extends Component {
     // nowa tablica zawierająca wszystkie kontakty z wyjątkiem tego z id
     const filtred = contacts.filter(item => item.id !== id);
     // aktualizacja właściwości contacts
-    this.setState({ contacts: filtred });
+    this.setState({ contacts: filtred, isLocalStorageCleared: true });
   };
 
   // Metoda obsługująca kliknięcie przycisku czyszczenia localStorage i przywracania podstawowego stanu
   handleResetLocalStorage = () => {
     localStorage.removeItem(CONTACTS);
-    this.setState({ contacts: initialContacts, isLocalStorageCleared: true });
+    this.setState({ contacts: initialContacts, isLocalStorageCleared: false });
     // this.loadContactsFromLocalStorage();
   };
 
