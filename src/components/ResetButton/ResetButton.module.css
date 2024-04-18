@@ -1,0 +1,15 @@
+/* ResetButton.module.css */
+
+.resetButton {
+  margin-top: 20px;
+  background-color: #dc143c;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background-color: #dc143c8c;
+}

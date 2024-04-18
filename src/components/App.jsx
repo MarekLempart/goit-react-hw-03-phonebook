@@ -6,6 +6,7 @@ import css from './App.module.css';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { ResetButton } from './ResetButton/ResetButton';
 
 const CONTACTS = 'contacts';
 const initialContacts = [
@@ -19,6 +20,7 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    isLocalStorageCleared: false,
   };
 
   // metoda cyklu życia, która jest wywoływana raz po zamontowaniu komponentu
@@ -79,11 +81,9 @@ export class App extends Component {
   filter = () => {
     const { contacts, filter } = this.state;
     // nowa tablica zawierająca wszystkie kontakty zawierające wyszukiwany ciąg znaków
-    const filteredContacts = contacts.filter(contact =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-    // zwrócenie nowej tablicy zawierającej tylko te kontakty, które pasują do ciągu wyszukiwania
-    return filteredContacts;
   };
 
   // pobranie parametru id do usunięcia z listy kontaktów
@@ -96,7 +96,16 @@ export class App extends Component {
     this.setState({ contacts: filtred });
   };
 
+  // Metoda obsługująca kliknięcie przycisku czyszczenia localStorage i przywracania podstawowego stanu
+  handleResetLocalStorage = () => {
+    localStorage.removeItem(CONTACTS);
+    this.setState({ constacts: [], isLocalStorageCleared: true });
+    // this.loadContactsFromLocalStorage();
+  };
+
   render() {
+    const { isLocalStorageCleared } = this.state;
+
     return (
       <div className={css.conteiner}>
         <h1>Phonebook</h1>
@@ -107,6 +116,10 @@ export class App extends Component {
         <Filter filter={this.state.filter} onChangeInput={this.onChangeInput} />
         {/* funkcja do usunięcia kontaktu + tablica kontaktów, która jest filtrowana w zależności od wartości filtra */}
         <ContactList delContact={this.delContact} contacts={this.filter()} />
+        {/* Przycisk Reset Button */}
+        {isLocalStorageCleared && (
+          <ResetButton onClick={this.handleResetLocalStorage} />
+        )}
       </div>
     );
   }
